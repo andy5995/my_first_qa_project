@@ -29,7 +29,7 @@ Run the following commands sequentially in your terminal to clone the repository
 
 ```bash
 # 1. Clone the repository and enter the directory
-git clone [https://github.com/zdelo01/my_first_qa_project.git](https://github.com/zdelo01/my_first_qa_project.git)
+git clone https://github.com/zdelo01/my_first_qa_project.git
 cd my_first_qa_project
 
 # 2. Create a Python Virtual Environment

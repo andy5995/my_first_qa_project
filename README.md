@@ -19,6 +19,8 @@ my-qa-portfolio/
 ├── tests/                  # Pytest execution scripts
 │   └── test_ecommerce_flow.py
 │   └── test_checkout_flow.py
+│   └── test_saucedemo.py
+├── conftest.py
 ├── pytest.ini              # Pytest environment configuration
 └── README.md               # Project documentation
 ```

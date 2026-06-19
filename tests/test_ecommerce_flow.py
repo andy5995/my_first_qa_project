@@ -19,6 +19,7 @@ def test_locked_out_user_error(page):
 
     login_page.navigate()
     login_page.login("locked_out_user", "secret_sauce")
-
     expected_error = "Epic sadface: Sorry, this user has been locked out."
     assert login_page.get_error_message() == expected_error
+
+    

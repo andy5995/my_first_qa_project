@@ -1,11 +1,10 @@
 class LoginPage:
-    def __init__ (self, page):
+    def __init__(self, page):
         self.page = page
-        # Web elements mapped to unique locators
         self.username_input = page.locator("#user-name")
         self.password_input = page.locator("#password")
         self.login_button = page.locator("#login-button")
-        self.error_container = page.locator("[data-test = 'error']")
+        self.error_container = page.locator("[data-test='error']")
 
     def navigate(self):
         self.page.goto("https://www.saucedemo.com/")
@@ -16,4 +15,5 @@ class LoginPage:
         self.login_button.click()
 
     def get_error_message(self):
-        return self.error_container.text_content()
+        self.error_container.wait_for(state="visible")
+        return self.error_container.inner_text()

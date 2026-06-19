@@ -12,8 +12,13 @@ __pycache__/
 # Playwright artifacts (if reports/traces get enabled later)
 test-results/
 playwright-report/
+blob-report/
 
 # Editor/OS noise
 .vscode/
 .idea/
 .DS_Store
+
+# Test outputs
+screenshots/
+test-results/

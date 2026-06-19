@@ -1,26 +1,27 @@
-# Takes a picture when test fails
-import os
 import pytest
+import os
 
-@pytest.hookimpl(tryfirst = True, hookwrapper = True)
-def pytest_runtest_makereport(item, call):
+os.makedirs("screenshots", exist_ok=True)
 
-    # Grabs result
+
+# capture test result
+@pytest.hookimpl(hookwrapper=True)
+def pytest_runtest_makereport(item):
     outcome = yield
-    report = outcome.get_result()
+    rep = outcome.get_result()
+    setattr(item, f"rep_{rep.when}", rep)
 
-    # Checks if test failed during its execution
-    if report.when == "call" and report.failed:
 
-        # Checks if test was using the browser
-        if "page" in item.fixturenames:
-            page = item.funcargs["page"]
+# screenshot on failure
+@pytest.fixture(autouse=True)
+def screenshot_on_failure(page, request):
+    yield
 
-            # Creates a folder named 'screenshots' if it doesnt exist yet
-            os.makedirs("screenshots", exist_ok  = True)
+    failed = getattr(request.node, "rep_call", None)
+    failed = failed and failed.failed
 
-            # Creates a filename using the test's name
-            filename = f"screenshots/{item.name}.png"
-
-            # Takes the screenshot
-            page.screenshot(path = filename)
+    if failed:
+        page.screenshot(
+            path=f"screenshots/{request.node.name}.png",
+            full_page=True
+        )

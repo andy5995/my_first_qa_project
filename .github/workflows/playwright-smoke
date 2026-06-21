@@ -3,7 +3,7 @@ name: CI - Smoke Suite
 on:
   push:
     branches: [ main ]
-  pull request:
+  pull_request:
     branches: [ main ]
 
 jobs:
@@ -11,17 +11,18 @@ jobs:
     name: Run Smoke tests
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         browser: [chromium, firefox, webkit]
 
     steps:
-      - name: Checkout code
+      - name: Checkout Code
         uses: actions/checkout@v4
 
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: "3.11"
           cache: 'pip'
 
       # Install python packages and browser requirements
@@ -30,6 +31,6 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install -r requirements.txt
           playwright install --with-deps
-          
+
       - name: Start Smoke Suite
         run: pytest --browser ${{ matrix.browser }} -m smoke

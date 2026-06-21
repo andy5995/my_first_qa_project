@@ -1,0 +1,49 @@
+name: CI - Regression Suite
+
+on:
+  # Every day
+  schedule:
+    - cron: '0 0 * * *'
+  # Manual run button
+  workflow_dispatch:
+
+jobs:
+  regression-tests:
+    name: Run Full Regression
+    runs-on: ubuntu-latest
+    strategy:
+      # Runs on other browsers even if one fails
+      fail-fast: false
+      matrix:
+        browser: [chromium, firefox, webkit]
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: 'pip'
+
+      # Install python packages and browser requirements
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt
+          playwright install --with-deps
+
+      - name: Run Regression
+        run: pytest --browser ${{ matrix.browser }} -m regression
+
+      # Upload both trace and screenshot always
+      - name: Upload Test Artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: failure-artifacts-${{ matrix.browser }}
+          path: |
+            test-results/
+            screenshots/
+          retention-days: 7

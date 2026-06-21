@@ -1,6 +1,7 @@
 class LoginPage:
     def __init__(self, page):
         self.page = page
+        self.error_message_locator = page.locator("[data-test='error']")
         self.username_input = page.locator("#user-name")
         self.password_input = page.locator("#password")
         self.login_button = page.locator("#login-button")

@@ -1,6 +1,7 @@
 class CheckOutPage:
     def __init__ (self, page):
         self.page = page
+        self.success_message_locator = page.locator("[data-test='complete-header']")
         self.checkout_button = page.locator("#checkout")
         self.firstname_input = page.locator("#first-name")
         self.lastname_input = page.locator("#last-name")

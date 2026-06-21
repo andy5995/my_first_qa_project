@@ -22,6 +22,7 @@ my-qa-portfolio/
 │   └── test_login.py
 ├── conftest.py
 ├── pytest.ini              # Pytest environment configuration
+├── requirements.txt        # Python package dependencies
 └── README.md               # Project documentation
 ```
 
@@ -42,8 +43,8 @@ python -m venv venv
 .\venv\Scripts\activate
 source venv/bin/activate
 
-# 4. Install Pytest and Playwright packages
-pip install pytest pytest-playwright
+# 4. Install the project dependencies
+pip install -r requirements.txt
 
 # 5. Download the Playwright browser binaries
 playwright install
